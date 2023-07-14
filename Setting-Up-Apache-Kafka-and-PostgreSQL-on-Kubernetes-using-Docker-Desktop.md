@@ -10,7 +10,7 @@ This technical note provides instructions on setting up and running Apache Kafka
 
 2. **Enable Kubernetes on Docker Desktop**: Open Docker Desktop, go to "Preferences" or "Settings", click on the "Kubernetes" tab, check the "Enable Kubernetes" checkbox, and click "Apply & Restart".
 
-3. **Install Helm**: Helm is a package manager for Kubernetes. For installation, follow the instructions here.
+3. **Install Helm**: Helm is a package manager for Kubernetes. For installation, follow the instructions here. https://helm.sh/docs/intro/install/
 
 ---
 
