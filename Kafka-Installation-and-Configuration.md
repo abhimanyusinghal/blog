@@ -108,3 +108,55 @@ This configuration file caters to consumers, which read messages from Kafka.
 **In Conclusion**:
 
 Configuration is the lever through which one can fine-tune Kafka's behavior. The flexibility offered by Kafka's configuration files ensures that it can be optimized for various scenarios, from a small dev setup to a large, multi-node production cluster. When setting up or maintaining a Kafka instance, it's crucial to revisit these files and understand the configurations in place, as they play a pivotal role in the system's performance, reliability, and behavior.
+
+
+### 3.3. Setting up a Kafka Single Node
+
+When setting up Kafka for development or testing purposes, a single-node setup is often sufficient. This setup entails running a single instance of both Kafka and ZooKeeper on one machine. Let's walk through the process step by step.
+
+#### **Starting ZooKeeper**:
+
+As of the last known updates, Kafka relies on ZooKeeper for various coordination and management tasks. Hence, before starting Kafka, we need to get ZooKeeper up and running.
+
+**1. Navigate to Kafka Directory**:
+First, make sure you are in the directory where Kafka is installed.
+```bash
+cd path_to_kafka_directory
+```
+
+**2. Start ZooKeeper Server**:
+Kafka comes bundled with convenience scripts to start ZooKeeper. Use the following command to start ZooKeeper:
+```bash
+bin/zookeeper-server-start.sh config/zookeeper.properties
+```
+
+- This command starts ZooKeeper using the default configurations provided in the `zookeeper.properties` file.
+  
+- Once started, you should see logs indicating that ZooKeeper is up and running, typically ending with something like `binding to port 0.0.0.0/0.0.0.0:2181`. The default port for ZooKeeper is `2181`.
+
+#### **Starting Kafka**:
+
+With ZooKeeper running, we can now start our Kafka broker.
+
+**1. Start Kafka Server**:
+Use the Kafka startup script to initiate the broker:
+```bash
+bin/kafka-server-start.sh config/server.properties
+```
+
+- This command starts the Kafka broker using configurations specified in `server.properties`. This file contains settings related to the broker, such as its ID, port, and log directories.
+  
+- Once the command is executed, you'll witness a stream of log messages. After a few moments, you should observe log entries indicating the Kafka server is started and listening, typically with a message like `\[KafkaServer id=0\] started`.
+
+**2. Verifying the Setup**:
+
+To ensure that Kafka is running correctly, you can list the available topics using the `kafka-topics.sh` script (even though you haven't created any topics yet):
+```bash
+bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+```
+
+- If Kafka is up and running correctly, this command will return without any errors. The default port for Kafka is `9092`.
+
+**In Conclusion**:
+
+Setting up a single-node Kafka cluster is a straightforward process, especially given the utility scripts bundled with Kafka. This setup is perfect for development, testing, or getting familiar with Kafka's functionalities. However, for production environments or scenarios requiring fault-tolerance and high availability, a multi-node Kafka cluster setup is recommended.
