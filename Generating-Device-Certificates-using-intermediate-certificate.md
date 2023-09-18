@@ -108,3 +108,66 @@ After completing these steps, you'll have:
 - A device certificate signed by the intermediate certificate (`newcerts/device.crt.pem`)
 
 Note that the root CA's private key was never required or exposed during this process, ensuring its security.
+
+
+The `.cnf` configuration file for OpenSSL contains settings used during various certificate-related operations. Below is break down the contents of the file above:
+
+### [ca]
+
+This section defines the default CA commands. 
+
+- `default_ca`: This specifies the name of the default section to use when the `ca` command is run. 
+
+### [CA_default]
+
+This section specifies default settings for the CA utility:
+
+- `dir`: The root directory for the certificate and key files.
+- `certs`: Where to find existing certificates.
+- `new_certs_dir`: Where to place new certificates.
+- `database`: The text database file that keeps track of signed certificates.
+- `serial`: The file that holds the current serial number.
+- `RANDFILE`: Location of the random number file.
+- `certificate`: The location of the intermediate certificate.
+- `private_key`: The location of the private key for the intermediate CA.
+- `default_days`: How many days a certificate is valid for by default.
+- `default_md`: The default message digest to use.
+- `preserve`: If set to "yes", it preserves the existing files by renaming them with a `.bak` extension.
+- `email_in_dn`: Whether to include an email address in the distinguished name.
+- `nameopt` and `certopt`: These are naming options and certificate display options.
+- `policy`: Policy to use when validating certificate signing requests (CSR). Here, it refers to the `policy_match` section.
+
+### [policy_match]
+
+This section defines the expected fields in the certificate signing request. Each field can have values like `match`, `optional`, or `supplied`.
+
+- `match`: The field in the CSR must match the CA's certificate.
+- `optional`: The field may be present but can be left blank.
+- `supplied`: The field must be present and cannot be left blank.
+
+### [req]
+
+This section is used when creating private keys and certificate signing requests:
+
+- `default_bits`: The size of the RSA key.
+- `default_keyfile`: The default name for the private key file.
+- `distinguished_name`: Section to use when prompting for fields for the Distinguished Name.
+- `attributes`: The attributes to prompt for when generating a CSR.
+- `x509_extensions`: Extensions to use when creating a self-signed certificate (not required for CSRs).
+
+### [req_distinguished_name]
+
+This section specifies the fields to prompt for when creating a CSR or self-signed certificate. These are the fields of the distinguished name in the certificate.
+
+### [req_attributes]
+
+This section specifies additional attributes to prompt for when creating a CSR.
+
+### [v3_ca]
+
+This section defines x509 v3 extensions that can be included in the certificate.
+
+- `subjectKeyIdentifier`: Creates an extension with a hash of the subject's public key. This can be used to identify the public key in the certificate.
+- `authorityKeyIdentifier`: Creates an extension with a hash of the issuer's public key. This helps identify the issuer's public key.
+- `basicConstraints`: Indicates if the certificate is a CA certificate. `CA:FALSE` means it's not a CA certificate.
+- `keyUsage`: This specifies the cryptographic operations for which the certificate's public key can be used.
