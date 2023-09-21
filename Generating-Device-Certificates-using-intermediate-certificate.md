@@ -3,7 +3,6 @@ A step-by-step guide on how to generate a device certificate signed by the inter
 ### Prerequisites:
 
 - OpenSSL
-- The root CA certificate (`rootCA.crt`)
 - The intermediate CA certificate (`intermediateCA.crt`)
 - The intermediate CA private key (`intermediateCA.key`)
 
@@ -47,9 +46,9 @@ certopt = default_ca
 policy = policy_match
 
 [ policy_match ]
-countryName = match
-stateOrProvinceName = match
-organizationName = match
+countryName = optional
+stateOrProvinceName = optional
+organizationName = optional
 organizationalUnitName = optional
 commonName = supplied
 emailAddress = optional
@@ -63,7 +62,6 @@ x509_extensions = v3_ca
 
 [ req_distinguished_name ]
 countryName = Country Name (2 letter code)
-countryName_default = US
 stateOrProvinceName = State or Province Name (full name)
 localityName = Locality Name (eg, city)
 organizationName = Organization Name (eg, company)
